@@ -1,0 +1,149 @@
+@import url(http://fonts.googleapis.com/css?family=Josefin+Sans:100,300,400,300italic);
+
+$topbar-bg: #999;
+
+div.orbit-container {
+  width: 100% !important;
+  height: 400px !important;
+  position: relative;
+  margin-top: 0px;
+  padding-top: 0px;
+}
+
+#headphones{
+	//width: 100%;
+}
+img{
+	width: 100%;
+	//height: 55%;
+}
+//********** PAGE *****************
+.call-box{
+	margin-top: 40px;
+	margin-bottom: 45px;
+	background-color: rgb(124,133,142);
+	color: white;
+	font-family: 'Open Sans';
+	position: relative;
+	padding: 20px 20px;
+	font-weight: 300;
+	font-size: 1.5em;
+	display: inline-block;
+	width: 100%;
+	height: 75px;
+	.link-box{
+		border: 1px solid #fff;
+		padding: 8px 18px;
+		color: white;
+		display: inline-block;
+		position: relative;
+		top: -5px;
+		-webkit-transition: background-color .5s;
+		transition: background-color .5s;
+		&:hover{
+			background-color: rgb(39, 169, 227);
+		}
+	}
+	p{
+		float: left;
+		display: inline-block;
+	}
+}
+.pull-right{
+	float: right;
+	//position: absolute;
+	//top: 0px;
+	//right: 0px;
+}
+.holder{
+	background-color: gray;
+}
+.modes{
+	position: relative;
+	.iconize{
+		position: relative;
+		top: 3px;
+		height: 25px;
+		display: inline-block;
+		width: auto;
+	}
+	h3{
+		display: inline-block;
+		margin-left: 10px;
+	}
+}
+//********** HOME *****************
+.images-row{
+	margin-bottom: 40px;
+}
+.highlighted-images{
+	div, img{
+		max-height: 170px;
+		width: auto;
+	}
+	.featured-image{
+		//max-height: 90px;
+		//max-width: 100px;
+	}
+}
+.highlighted-images>img{
+	//max-height: 178px;
+	//width: auto;
+	//margin-bottom: 200px;
+}
+//********** HEADER ***************
+nav.top-bar{
+	margin-bottom: 0px;
+}
+
+//********** FOOTER ***************
+footer{
+	margin-top: 45px;
+}
+.footer{
+	background-color: black;
+	color: white;
+	position: relative;
+	.row{
+		position: relative;
+	}
+	h1{
+		color: rgb(124,133,142);
+	}
+	.contact{
+		//height: 100%;
+		position: relative;
+		//background-color: purple;
+		//top: 0px;
+		//bottom: 0px;
+		//width: 100%;
+		//height: 247px;
+		.subscribe{
+			//position: relative;
+			margin-top: 10px;
+			display: block;
+			//position: absolute;
+			//bottom: 0px;
+		}
+		form {
+			margin-top: 10px;
+		}
+	}
+}
+.social-bar{ 
+	//display: inline-block;
+	width: 100%;
+	background-color: #222;
+	display: inline-block;
+	ul{
+		//list-style: none;
+		margin-bottom: 0px;
+	}
+}
+//********** TYPE *****************
+p{
+	font-family: 'Josefin sans','Times New Roman',  'Helvetica Nue';
+	//font-weight: bold;
+	//color: green;
+	//$paragraph-font-family: arial;
+}

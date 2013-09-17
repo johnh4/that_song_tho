@@ -1,0 +1,26 @@
+//@import "foundation/foundation-global";
+@import url(http://fonts.googleapis.com/css?family=Josefin+Sans:100,300,400,300italic);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,400,300);
+
+//$paragraph-font-family: 'josefin sans'; //inherit
+
+.footer{
+	font-family: 'Open Sans';
+	font-weight: 300;
+}
+p,h1{
+	font-family:  'Open Sans';
+	//font-weight: 300;
+}
+p{
+	color: #656565;
+	font-size: 13px;
+	font-weight: 400;
+}
+h1{
+	color: #444;
+}
+h3{
+	font-family: 'Open Sans';
+	font-weight: 300;
+}

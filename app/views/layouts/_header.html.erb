@@ -1,0 +1,25 @@
+<nav class="top-bar">
+	<ul class="title-area">
+		<li class="name"><h1><%= link_to "that song tho", root_path %></h1></li>
+		<li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+	</ul>
+	<section class="top-bar-section">
+		<ul class="left">
+			<li class="divider"></li>
+			<li><%= link_to "about", about_path %></li>
+			<li class="divider"></li>
+		</ul>
+		<ul class="right">
+			<li><%= link_to "home", root_path %></li>
+			<li><%= link_to "help", help_path %></li>
+			<li class="has-dropdown"><%= link_to "Drops", "#" %>
+				<ul class="dropdown">
+					<li><%= link_to "Dropdown 1" %></li>
+					<li><%= link_to "Dropdown 2" %></li>
+					<li class="divider"></li>
+					<li><%= link_to "Dropdown 3" %></li>
+				</ul>
+			</li>
+		</ul>
+	</section>
+</nav>
