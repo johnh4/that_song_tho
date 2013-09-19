@@ -20,6 +20,14 @@ class User < ActiveRecord::Base
 		songs.where(liked: nil)
 	end
 
+	def like_song(song)
+		song.liked = true
+	end
+
+	def dislike_song(song)
+		song.liked = false
+	end
+
 	def genres=(genres)
 		@genres = genres
 	end
@@ -34,6 +42,18 @@ class User < ActiveRecord::Base
 
 	def remove_genre(genre)
 		@genres.delete(genre)
+	end
+
+	def favorite=(song)
+		@favorite = song
+	end
+
+	def set_favorite(song)
+		@favorite = song
+	end
+
+	def favorite
+		@favorite
 	end
 
 end
