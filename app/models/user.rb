@@ -4,17 +4,19 @@ class User < ActiveRecord::Base
 	devise :database_authenticatable, :registerable,
 	     :recoverable, :rememberable, :trackable, :validatable
 
+	has_many :songs	    
+
 	validates :name, presence: true
 	
 	def liked_songs
-		Song.where(liked: true)
+		songs.where(liked: true)
 	end
 
 	def disliked_songs
-		Song.where(liked: false)
+		songs.where(liked: false)
 	end
 
 	def undecided_songs
-		Song.where(liked: nil)
+		songs.where(liked: nil)
 	end
 end

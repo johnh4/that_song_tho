@@ -30,6 +30,7 @@ describe User do
 
 		context "songs neither liked nor disliked" do
 			its(:liked_songs) { should be_empty }
+			its(:disliked_songs) { should be_empty }
 			its(:undecided_songs) { should include(song) }
 		end
 
@@ -42,6 +43,16 @@ describe User do
 		context "disliked songs " do
 			let!(:disliked_song) { FactoryGirl.create(:song, liked: false, user_id: user.id) }
 			its(:disliked_songs) { should include(disliked_song) }
+		end
+
+		describe "when another user likes" do
+			let(:user_2) { FactoryGirl.create(:user) }
+			let!(:song_2) { FactoryGirl.create(:song, user_id: user_2.id, liked: true) }
+
+			specify{ user_2.liked_songs.should_not be_empty }
+
+			its(:liked_songs) { should be_empty }
+
 		end
 	end
 

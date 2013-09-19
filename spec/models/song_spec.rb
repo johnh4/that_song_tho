@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe Song do
+	let!(:user_a) { FactoryGirl.create(:user) }
+	let(:user_song) { FactoryGirl.create(:song, user_id: user_a.id) }
 	let!(:song) { FactoryGirl.create(:song) }
 
 	subject { song }
@@ -28,6 +30,8 @@ describe Song do
 		describe "after liked" do
 			before { song.liked = true }
 			its(:liked) { should eq(true) }
+
+			specify { user_song.liked.should_not eq(true) }
 		end
 		describe "after disliked" do
 			before { song.liked = false }
