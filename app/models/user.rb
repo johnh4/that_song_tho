@@ -19,4 +19,21 @@ class User < ActiveRecord::Base
 	def undecided_songs
 		songs.where(liked: nil)
 	end
+
+	def genres=(genres)
+		@genres = genres
+	end
+
+	def genres
+		@genres
+	end
+
+	def add_genre(genre)
+		@genres.push(genre)
+	end
+
+	def remove_genre(genre)
+		@genres.delete(genre)
+	end
+
 end

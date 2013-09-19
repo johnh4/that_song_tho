@@ -14,6 +14,7 @@ describe User do
 
 	it { should respond_to(:liked_songs) }
 	it { should respond_to(:disliked_songs) }
+	it { should respond_to(:genres) }
 
 	describe "when email address is not valid" do
 		it "should not be valid" do
@@ -53,6 +54,32 @@ describe User do
 
 			its(:liked_songs) { should be_empty }
 
+		end
+	end
+	describe "after setting genres via .genres" do
+		before do
+			@genres = %w[Hip-Hop/Rap Country Pop R&B Rock Soul Electronic Dubstep]
+			user.genres = @genres
+			user.save
+		end
+
+		it "should be accessible" do
+			genres = %w[Hip-Hop/Rap Country Pop R&B Rock Soul Electronic Dubstep]
+			user.genres.should == genres
+		end
+
+		describe "should be able to be added to" do
+			before do
+				user.add_genre('Classic Rock')
+			end
+
+			its(:genres) { should include('Classic Rock') }
+		end
+
+		describe "and should be able to be subtracted from" do
+			before { user.remove_genre('Dubstep') }
+
+			its(:genres) { should_not include('Dubstep') }
 		end
 	end
 
