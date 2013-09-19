@@ -15,6 +15,7 @@ describe User do
 	it { should respond_to(:liked_songs) }
 	it { should respond_to(:disliked_songs) }
 	it { should respond_to(:genres) }
+	it { should respond_to(:favorite) }
 
 	describe "when email address is not valid" do
 		it "should not be valid" do
@@ -33,6 +34,15 @@ describe User do
 			its(:liked_songs) { should be_empty }
 			its(:disliked_songs) { should be_empty }
 			its(:undecided_songs) { should include(song) }
+
+			describe "can be liked using user method" do
+				before { user.like_song(song) }
+				specify { song.liked.should be_true }
+			end
+			describe "can be disliked using user method" do
+				before { user.dislike_song(song) }
+				specify { song.liked.should be_false }
+			end
 		end
 
 		context "liked songs" do
@@ -80,6 +90,18 @@ describe User do
 			before { user.remove_genre('Dubstep') }
 
 			its(:genres) { should_not include('Dubstep') }
+		end
+	end
+	describe "favorites" do
+		describe "are not defined by default" do
+			its(:favorite) { should be_nil }
+		end
+
+		describe "can be set" do
+			let!(:song) { FactoryGirl.create(:song) }
+			before { user.set_favorite(song) }
+
+			its(:favorite) { should == song }
 		end
 	end
 
