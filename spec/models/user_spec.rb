@@ -7,6 +7,7 @@ describe User do
 
 	it { should respond_to(:name) }
 	it { should respond_to(:email) }
+	it { should respond_to(:challenge_mode_id) }
 
 	it { should be_instance_of(User) }
 	it { should validate_presence_of(:name) }
@@ -66,30 +67,31 @@ describe User do
 
 		end
 	end
-	describe "after setting genres via .genres" do
-		before do
-			@genres = %w[Hip-Hop/Rap Country Pop R&B Rock Soul Electronic Dubstep]
-			user.genres = @genres
-			user.save
-		end
+	describe "after setting genres via association" do
+		before { user.save }
+		let!(:opera) { FactoryGirl.create(:genre, user: user, name: "Opera") }
+		let!(:rap) { FactoryGirl.create(:genre, user: user, name: "Rap") }
 
-		it "should be accessible" do
-			genres = %w[Hip-Hop/Rap Country Pop R&B Rock Soul Electronic Dubstep]
-			user.genres.should == genres
+		let!(:rock) { FactoryGirl.create(:genre, user: FactoryGirl.create(:user), name: "Rock") }
+
+		it "should be accessible via association" do
+			user.genres.should include(opera, rap)
 		end
+		its(:genres) { should_not include(rock) }
 
 		describe "should be able to be added to" do
 			before do
-				user.add_genre('Classic Rock')
+				@showtunes = user.genres.create(name: "Showtunes")
 			end
 
-			its(:genres) { should include('Classic Rock') }
+			its(:genres) { should include(@showtunes) }
 		end
 
 		describe "and should be able to be subtracted from" do
-			before { user.remove_genre('Dubstep') }
+			before { user.genres.find_by(name: "Opera").destroy }
 
-			its(:genres) { should_not include('Dubstep') }
+			its(:genres) { should_not be_empty }
+			its(:genres) { should_not include(opera) }
 		end
 	end
 	describe "favorites" do

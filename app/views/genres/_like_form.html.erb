@@ -1,0 +1,7 @@
+<%= form_for(current_user.genres.build(name: genre)) do |f| %>
+
+	<%= f.hidden_field :name %>
+
+	<%= f.submit "like", id: genre %>
+
+<% end %>

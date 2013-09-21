@@ -4,6 +4,8 @@ FactoryGirl.define do
 		sequence(:email)	{ |n| "user-#{n}@example.com" }
 		password	"password"
 		password_confirmation	"password"
+		challenge_mode
+		#after(:create) { |user| user.add_genre('InitialGenre') }
 	end
 
 	factory :song do
@@ -14,6 +16,7 @@ FactoryGirl.define do
 		genre	"Hip-Hop/Rap"
 		liked	nil
 		user
+		challenge_mode
 
 		factory :liked do
 			title  "I like this song"
@@ -32,5 +35,13 @@ FactoryGirl.define do
 			genre  "Unpop"
 			liked false
 		end
+	end
+
+	factory :genre do
+		sequence(:name) { |n| "Genre-#{n}" }
+		user
+	end
+
+	factory :challenge_mode do
 	end
 end

@@ -14,6 +14,7 @@ describe Song do
 	it { should respond_to(:length) }
 	it { should respond_to(:user_id) }
 	it { should respond_to(:liked) }
+	it { should respond_to(:challenge_mode_id) }
 
 	describe "title" do
 		context "when empty" do

@@ -1,0 +1,26 @@
+
+<% if user_signed_in? %>
+	<div class="row">
+		<div class="large-12 columns">
+			<div class="large-6 columns">
+				<h1 class="subheader">My Genres</h1>
+				<ul id="my-genres">
+					<% if !@genres.empty? %>
+						<% @genres.each do |genre| %>
+							<li><%= genre.name %>
+								<%= link_to "dislike", genre_path(genre.name),
+									method: :delete %>
+							</li>
+						<% end %>
+					<% end %>
+				</ul>
+			</div>
+			<div class="large-6 columns">
+				<h1 class="subheader">Like a Genre</h1>
+				<ul id="like-a-genre">
+					<%= render partial: 'genres/listed_genre', collection: @all_genres %>
+				</ul>
+			</div>
+		</div>
+	</div>
+<% end %>

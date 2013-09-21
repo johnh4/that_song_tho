@@ -1,10 +1,15 @@
 ThatSongTho::Application.routes.draw do
 
   devise_for :users
-  
+
+  resources :genres, only: [:create, :destroy, :index]
+
   get '/about', to: "static_pages#about"
   get '/contact', to: "static_pages#contact"
   get '/help', to: "static_pages#help"
+
+  #get '/genres', to: "songs#genres"
+  #post '/genres', to: "songs#like_genre", as: "like_genre"
 
   root 'static_pages#home'
 

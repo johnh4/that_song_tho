@@ -4,7 +4,9 @@ class User < ActiveRecord::Base
 	devise :database_authenticatable, :registerable,
 	     :recoverable, :rememberable, :trackable, :validatable
 
-	has_many :songs	    
+	has_many :songs
+	has_many :genres
+	belongs_to :challenge_mode    
 
 	validates :name, presence: true
 	
@@ -27,23 +29,23 @@ class User < ActiveRecord::Base
 	def dislike_song(song)
 		song.liked = false
 	end
-
+=begin
 	def genres=(genres)
 		@genres = genres
 	end
 
 	def genres
-		@genres
+		@genres.nil? ? [] : @genres
 	end
 
 	def add_genre(genre)
-		@genres.push(genre)
+		@genres.nil? ? @genres=[genre] : @genres.push(genre)
 	end
 
 	def remove_genre(genre)
 		@genres.delete(genre)
 	end
-
+=end
 	def favorite=(song)
 		@favorite = song
 	end

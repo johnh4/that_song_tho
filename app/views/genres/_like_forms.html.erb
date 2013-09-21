@@ -1,0 +1,5 @@
+<% unless current_user.genres.find_by(name: genre).nil? %>
+	<%= link_to "dislike", genre_path(genre), method: :delete, id: "dislike-#{genre}" %>
+<% else %>
+	<%= render partial: 'genres/like_form', locals: { genre: genre } %>
+<% end %>

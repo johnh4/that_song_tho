@@ -5,7 +5,6 @@ ruby '2.0.0'
 gem 'rails', '4.0.0'
 #gem 'bootstrap-sass'#, '2.3.2.0'
 gem 'bcrypt-ruby', '3.0.1'
-gem 'faker', '1.1.2'
 gem 'will_paginate', '3.0.4'
 #gem 'bootstrap-will_paginate', '0.0.9'
 gem 'compass-rails'
@@ -20,6 +19,8 @@ group :development, :test do
   # gem 'spork-rails', github: 'sporkrb/spork-rails'
   # gem 'guard-spork', '1.5.0'
   # gem 'childprocess', '0.3.6'
+  gem 'faker', '1.1.2'
+  
 end
 
 group :test do
