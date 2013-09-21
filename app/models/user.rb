@@ -6,7 +6,10 @@ class User < ActiveRecord::Base
 
 	has_many :songs
 	has_many :genres
-	belongs_to :challenge_mode    
+	belongs_to :challenge_mode 
+
+	has_one :favorite, class_name: "Song"
+	has_many :suggestions, class_name: "Song"  
 
 	validates :name, presence: true
 	
@@ -29,33 +32,4 @@ class User < ActiveRecord::Base
 	def dislike_song(song)
 		song.liked = false
 	end
-=begin
-	def genres=(genres)
-		@genres = genres
-	end
-
-	def genres
-		@genres.nil? ? [] : @genres
-	end
-
-	def add_genre(genre)
-		@genres.nil? ? @genres=[genre] : @genres.push(genre)
-	end
-
-	def remove_genre(genre)
-		@genres.delete(genre)
-	end
-=end
-	def favorite=(song)
-		@favorite = song
-	end
-
-	def set_favorite(song)
-		@favorite = song
-	end
-
-	def favorite
-		@favorite
-	end
-
 end

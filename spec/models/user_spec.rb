@@ -17,6 +17,7 @@ describe User do
 	it { should respond_to(:disliked_songs) }
 	it { should respond_to(:genres) }
 	it { should respond_to(:favorite) }
+	it { should respond_to(:suggestions) }
 
 	describe "when email address is not valid" do
 		it "should not be valid" do
@@ -100,11 +101,40 @@ describe User do
 		end
 
 		describe "can be set" do
-			let!(:song) { FactoryGirl.create(:song) }
-			before { user.set_favorite(song) }
+			before { @my_fav = user.create_favorite(FactoryGirl.attributes_for(:song)) }
 
-			its(:favorite) { should == song }
+			its(:favorite) { should == @my_fav }
+			its(:favorite) { should be_instance_of(Song) }
+
+			describe "and there can be only one" do
+				before { @my_new_fav = user.create_favorite(FactoryGirl.attributes_for(:song)) }
+
+				its(:favorite) { should == @my_new_fav }
+				its(:favorite) { should_not eq(@my_fav) }
+			end
 		end
 	end
+	describe "suggestions" do
+		describe "are not defined by default" do
+			its(:suggestions) { should be_empty }
+		end
 
+		describe "can have songs added" do
+			before do
+				user.save
+				@suggestion_1 = user.suggestions.create(FactoryGirl.attributes_for(:song))
+			end
+
+			specify { user.suggestions.first.should == @suggestion_1 }
+			specify { user.suggestions.first.should be_instance_of(Song) }
+
+			describe "and there can more than one suggesion" do
+				before { @my_new_suggestion = 
+						 user.suggestions.create(FactoryGirl.attributes_for(:song)) }
+
+				specify { user.suggestions.last.should == @my_new_suggestion }
+				its(:suggestions) { should include(@suggestion_1) }
+			end
+		end
+	end
 end
