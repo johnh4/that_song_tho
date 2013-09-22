@@ -1,0 +1,9 @@
+<p>
+	title: <%= suggestion.title %>
+	artist: <%= suggestion.artist %>
+</p>
+<div class="challenger-forms">
+<%= render partial: 'shared/like_song',	locals: { suggestion: suggestion } %>
+<%= render partial: 'shared/dislike_song', locals: { suggestion: suggestion } %>
+</div>
+-------

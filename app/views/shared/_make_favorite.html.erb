@@ -1,0 +1,4 @@
+<%= form_for(@current_challenger, url: make_favorite_song_path(@current_challenger), method: :patch) do |f| %>
+	
+	<%= f.submit "make favorite" %>
+<% end %>

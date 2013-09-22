@@ -1,0 +1,3 @@
+<%= form_for(suggestion, url: dislike_path(suggestion), method: :patch) do |f| %>
+	<%= f.submit "dislike", id: "dislike-#{suggestion.id}" %>
+<% end %>

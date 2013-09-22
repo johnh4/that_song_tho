@@ -3,6 +3,14 @@ ThatSongTho::Application.routes.draw do
   devise_for :users
 
   resources :genres, only: [:create, :destroy, :index]
+  resources :challenge_modes, only: [:new, :create, :show, :destroy]
+  resources :songs, only: [:create, :update, :destroy]
+
+  patch '/songs/:id/dislike', to: "songs#dislike", as: "dislike"
+  patch '/songs/:id/like',    to: "songs#like",    as: "like"
+  patch '/challenge_modes/:id/make_favorite', to: "challenge_modes#make_favorite", as: "make_favorite"
+  patch '/songs/:id/make_favorite', to: "songs#make_favorite", as: "make_favorite_song"
+
 
   get '/about', to: "static_pages#about"
   get '/contact', to: "static_pages#contact"

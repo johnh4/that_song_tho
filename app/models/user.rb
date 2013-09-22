@@ -8,7 +8,8 @@ class User < ActiveRecord::Base
 	has_many :genres
 	belongs_to :challenge_mode 
 
-	has_one :favorite, class_name: "Song"
+	#has_one :favorite, class_name: "Song"
+	has_many :favorites, class_name: "Song"
 	has_many :suggestions, class_name: "Song"  
 
 	validates :name, presence: true
@@ -31,5 +32,9 @@ class User < ActiveRecord::Base
 
 	def dislike_song(song)
 		song.liked = false
+	end
+
+	def favorite
+		favorites.last
 	end
 end

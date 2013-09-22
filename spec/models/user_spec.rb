@@ -16,7 +16,7 @@ describe User do
 	it { should respond_to(:liked_songs) }
 	it { should respond_to(:disliked_songs) }
 	it { should respond_to(:genres) }
-	it { should respond_to(:favorite) }
+	it { should respond_to(:favorites) }
 	it { should respond_to(:suggestions) }
 
 	describe "when email address is not valid" do
@@ -96,21 +96,21 @@ describe User do
 		end
 	end
 	describe "favorites" do
-		describe "are not defined by default" do
-			its(:favorite) { should be_nil }
+		before { user.save }
+		describe "are empty by default" do
+			its(:favorites) { should be_empty }
 		end
 
 		describe "can be set" do
-			before { @my_fav = user.create_favorite(FactoryGirl.attributes_for(:song)) }
+			before { @my_fav = user.favorites.create(FactoryGirl.attributes_for(:song)) }
 
-			its(:favorite) { should == @my_fav }
-			its(:favorite) { should be_instance_of(Song) }
+			specify { user.favorites.last.should == @my_fav }
+			specify { user.favorites.last.should be_instance_of(Song) }
 
-			describe "and there can be only one" do
-				before { @my_new_fav = user.create_favorite(FactoryGirl.attributes_for(:song)) }
+			describe "and subsequent favorites can be set" do
+				before { @my_new_fav = user.favorites.create(FactoryGirl.attributes_for(:song)) }
 
-				its(:favorite) { should == @my_new_fav }
-				its(:favorite) { should_not eq(@my_fav) }
+				specify { user.favorites.last.should == @my_new_fav }
 			end
 		end
 	end
