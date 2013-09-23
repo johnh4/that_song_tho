@@ -13,27 +13,67 @@ class SongsController < ApplicationController
 	def dislike
 		@song = Song.find(params[:id])
 		@challenge_mode = @song.challenge_mode
+
+		#move to the next challenger
+		num_sugg = @challenge_mode.suggestions.count
+		last_chall = @challenge_mode.current_challenger_index
+		if last_chall < num_sugg - 1
+			current_challenger_index = last_chall + 1
+		else
+			current_challenger_index = 0
+		end
+		@challenge_mode.update(current_challenger_index: current_challenger_index)
+		@current_challenger = @challenge_mode.suggestions[current_challenger_index]
+
+		#dislike the song, remove duplicates
 		@song.update(liked: false)
 		if current_user.songs.find_by(title: @song.title, artist: @song.artist)
 			matches = current_user.songs.where(title: @song.title, artist: @song.artist)
-			matches.each { |match| match.update(liked: false) }
+			matches.each do |match| 
+				match.destroy
+			end
+			current_user.songs.create(title: @song.title, artist: @song.artist, liked: false)
 		else
 			current_user.songs.create(title: @song.title, artist: @song.artist, liked: false)
 		end
-		redirect_to @challenge_mode
+
+		respond_to do |format|
+			format.html { redirect_to @challenge_mode }
+			format.js
+		end
 	end
 
 	def like
 		@song = Song.find(params[:id])
 		@challenge_mode = @song.challenge_mode
+
+		#move to the next challenger
+		num_sugg = @challenge_mode.suggestions.count
+		last_chall = @challenge_mode.current_challenger_index
+		if last_chall < num_sugg - 1
+			current_challenger_index = last_chall + 1
+		else
+			current_challenger_index = 0
+		end
+		@challenge_mode.update(current_challenger_index: current_challenger_index)
+		@current_challenger = @challenge_mode.suggestions[current_challenger_index]
+
+		#like the song, remove duplicates
 		@song.update(liked: true)
 		if current_user.songs.find_by(title: @song.title, artist: @song.artist)
 			matches = current_user.songs.where(title: @song.title, artist: @song.artist)
-			matches.each { |match| match.update(liked: true) }
+			matches.each do |match| 
+				match.destroy
+			end
+			current_user.songs.create(title: @song.title, artist: @song.artist, liked: true)
 		else
 			current_user.songs.create(title: @song.title, artist: @song.artist, liked: true)
 		end
-		redirect_to @challenge_mode
+
+		respond_to do |format|
+			format.html { redirect_to @challenge_mode }
+			format.js
+		end
 	end
 
 	def make_favorite

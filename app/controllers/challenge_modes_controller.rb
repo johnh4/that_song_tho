@@ -37,8 +37,9 @@ class ChallengeModesController < ApplicationController
     #if current_user.favorite.nil?
     #	current_user.create_favorite(title: "My Fav Song", artist: "My Fav Artist")
     #end
+    #@challenge_mode.update(current_challenger: @challenge_mode.current_challenger += 1)
     @suggestions = @challenge_mode.suggestions
-    @current_challenger = @suggestions[4]
+    @current_challenger = @suggestions[@challenge_mode.current_challenger_index]
   	if current_user.favorites.empty?
       #@favorite = current_user.favorite
   	else

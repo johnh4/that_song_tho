@@ -1,29 +1,38 @@
+<div id="test"></div>
 <div class="row">
 	<h1>Challenge Mode</h1>
-	<div class="large-6 columns" id: "favorite-area">
+	<div class="large-6 columns" id="favorite-area">
 		<h1 class="subheader">Favorite</h1>
 		<p>
 			my last favorite song's title: <%= @favorite.title %><br>
 			my last favorite song's artist: <%= @favorite.artist %>
 		</p>
 	</div>
-	<div class="large-6 columns" id: "contender-area">
+	<div class="large-6 columns" id="challenger-area">
 		<h1 class="subheader">Challenger</h1>
 		<p>
-			challenger #1: <br>
-			title: <%= @challenge_mode.suggestions.first.title %>
-			artist: <%= @challenge_mode.suggestions.first.artist %>
+			challenge_mode.current_challenger index:
+				<span id="challenger-index">
+					<%= @challenge_mode.current_challenger_index %>
+				</span><br>
+			current challenger: <span class="challenger-title"><%= @current_challenger.title %></span> <br>
+			title: <span class="challenger-title"><%= @current_challenger.title %></span>
+			artist: <span id="challenger-artist"><%= @current_challenger.artist %></span>
 		</p>
 		<div id="current-challenger-forms">
-			<%= render partial: 'shared/make_favorite' %>
+			<div id="favorite-suggestion"></div>
+			<div id="make-favorite-form">
+				<%= render partial: 'shared/make_favorite',
+					locals: { suggestion: @current_challenger } %>
+			</div>
 			<%= render partial: 'shared/like_song',
-				locals: { suggestion: @challenge_mode.suggestions.first } %>
+				locals: { suggestion: @current_challenger } %>
 			<%= render partial: 'shared/dislike_song', 
-				locals: { suggestion: @challenge_mode.suggestions.first } %>
+				locals: { suggestion: @current_challenger } %>
 		</div>
 	</div>
 	<div class="large-12 columns">
-		<div class="large-6 columns">
+		<div class="large-6 columns all-challengers-forms">
 			<h1 class="subheader">All Challengers</h1>
 			<%= render partial: 'challenge_modes/suggestion', collection: @suggestions %>
 		</div>

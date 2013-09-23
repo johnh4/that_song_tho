@@ -1,0 +1,17 @@
+<h1 class="subheader">Challenger</h1>
+<p>
+	challenge_mode.current_challenger index:
+		<span id="challenger-index">
+			<%= @challenge_mode.current_challenger_index %>
+		</span><br>
+	current challenger: <span class="challenger-title"><%= @current_challenger.title %></span> <br>
+	title: <span class="challenger-title"><%= @current_challenger.title %></span>
+	artist: <span id="challenger-artist"><%= @current_challenger.artist %></span>
+</p>
+<div id="current-challenger-forms">
+	<%= render partial: 'shared/make_favorite' %>
+	<%= render partial: 'shared/like_song',
+		locals: { suggestion: @current_challenger } %>
+	<%= render partial: 'shared/dislike_song', 
+		locals: { suggestion: @current_challenger } %>
+</div>

@@ -1,0 +1,20 @@
+function ready(){
+	//$("#challenger-area2").animate({width:'toggle'},350);
+	//$('#challenger-area2').fadeOut();
+	$('#test').fadeOut(300);
+	$('#test').append('test working');
+	$('#test').fadeIn();
+
+	$('#challenger-area').fadeOut(500, replaceNames);
+	$('#challenger-area').fadeIn(500);
+}
+$(document).ready(ready);
+$(document).on('page:load', ready);
+
+function replaceNames(){
+	$('#challenger-index').html("<%= @challenge_mode.current_challenger_index %>");
+	$('.challenger-title').html("<%= @current_challenger.title %>");
+	$('#challenger-artist').html("<%= @current_challenger.artist %>");
+	$('#make-favorite-form').html("<%= escape_javascript(render partial: 'shared/make_favorite',
+									   locals: { suggestion: @current_challenger }) %>");
+}

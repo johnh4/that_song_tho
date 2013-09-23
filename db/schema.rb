@@ -11,11 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130920231344) do
+ActiveRecord::Schema.define(version: 20130923170513) do
 
   create_table "challenge_modes", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "current_challenger_index", default: 0
   end
 
   create_table "genres", force: true do |t|
