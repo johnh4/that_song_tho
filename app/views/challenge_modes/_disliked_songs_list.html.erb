@@ -1,0 +1,6 @@
+<h1 class="subheader">Disliked Songs</h1>
+<ul>
+	<% current_user.disliked_songs.each do |song| %>
+		<li>title: <%= song.title %></li>
+	<% end %>
+</ul>

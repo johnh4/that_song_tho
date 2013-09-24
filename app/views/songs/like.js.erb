@@ -5,6 +5,8 @@ function ready(){
 	$('#test').append('test working');
 	$('#test').fadeIn();
 
+	$('#disliked-songs-list').html("<%= escape_javascript(render partial: 'challenge_modes/disliked_songs_list') %>");
+	$('#liked-songs-list').html("<%= escape_javascript(render partial: 'challenge_modes/liked_songs_list') %>");
 	$('#challenger-area').fadeOut(500, replaceNames);
 	$('#challenger-area').fadeIn(500);
 }
@@ -17,4 +19,8 @@ function replaceNames(){
 	$('#challenger-artist').html("<%= @current_challenger.artist %>");
 	$('#make-favorite-form').html("<%= escape_javascript(render partial: 'shared/make_favorite',
 									   locals: { suggestion: @current_challenger }) %>");
+	$('#like-button').html("<%= escape_javascript(render partial: 'shared/like_song',
+						        locals: { suggestion: @current_challenger }) %>");
+	$('#dislike-button').html("<%= escape_javascript(render partial: 'shared/dislike_song',
+						        locals: { suggestion: @current_challenger }) %>");
 }
