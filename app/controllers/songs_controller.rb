@@ -37,10 +37,15 @@ class SongsController < ApplicationController
 			current_user.songs.create(title: @song.title, artist: @song.artist, liked: false)
 		end
 
+		#update the favorite's rounds won count
+		rounds_won = current_user.favorites.last.rounds_won + 1
+		current_user.favorites.last.update(rounds_won: rounds_won)
+
 		respond_to do |format|
 			format.html { redirect_to @challenge_mode }
 			format.js
 		end
+		#redirect_to @challenge_mode
 	end
 
 	def like
@@ -70,10 +75,16 @@ class SongsController < ApplicationController
 			current_user.songs.create(title: @song.title, artist: @song.artist, liked: true)
 		end
 
+		#update the favorite's rounds won count
+		#current_user.update_favorite_won_count
+		rounds_won = current_user.favorites.last.rounds_won + 1
+		current_user.favorites.last.update(rounds_won: rounds_won)
+		
 		respond_to do |format|
 			format.html { redirect_to @challenge_mode }
 			format.js
 		end
+		#redirect_to @challenge_mode
 	end
 
 	def make_favorite
@@ -85,7 +96,11 @@ class SongsController < ApplicationController
 	    					#{@new_favorite.title} by #{@new_favorite.artist}.
 	    					current_user.favorites.last.title is #{current_user.favorites.last.title}.
 	    					"
-	    redirect_to @challenge_mode
+	    respond_to do |format|
+			format.html { redirect_to @challenge_mode }
+			format.js
+		end
+	    #redirect_to @challenge_mode
 	  end
 
 

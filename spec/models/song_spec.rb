@@ -15,6 +15,7 @@ describe Song do
 	it { should respond_to(:user_id) }
 	it { should respond_to(:liked) }
 	it { should respond_to(:challenge_mode_id) }
+	it { should respond_to(:rounds_won) }
 
 	describe "title" do
 		context "when empty" do
@@ -37,6 +38,12 @@ describe Song do
 		describe "after disliked" do
 			before { song.liked = false }
 			its(:liked) { should == false }
+		end
+	end
+
+	describe "rounds won" do
+		context "by default" do
+			its(:rounds_won) { should eq(0) }
 		end
 	end
 

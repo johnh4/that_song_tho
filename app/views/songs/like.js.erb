@@ -1,12 +1,14 @@
 function ready(){
 	//$("#challenger-area2").animate({width:'toggle'},350);
 	//$('#challenger-area2').fadeOut();
-	$('#test').fadeOut(300);
+	$('#test').slideDown(300);
 	$('#test').append('test working');
 	$('#test').fadeIn();
 
 	$('#disliked-songs-list').html("<%= escape_javascript(render partial: 'challenge_modes/disliked_songs_list') %>");
 	$('#liked-songs-list').html("<%= escape_javascript(render partial: 'challenge_modes/liked_songs_list') %>");
+	$('#rounds-won').html("<%= current_user.favorites.last.rounds_won %>");
+	$('#favorite-area').html("<%= escape_javascript(render partial: 'challenge_modes/favorite_details') %>");
 	$('#challenger-area').fadeOut(500, replaceNames);
 	$('#challenger-area').fadeIn(500);
 }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130923170513) do
+ActiveRecord::Schema.define(version: 20130924210523) do
 
   create_table "challenge_modes", force: true do |t|
     t.datetime "created_at"
@@ -37,6 +37,8 @@ ActiveRecord::Schema.define(version: 20130923170513) do
     t.datetime "updated_at"
     t.boolean  "liked"
     t.integer  "challenge_mode_id"
+    t.integer  "rounds_won",        default: 0
+    t.integer  "favoriter_id"
   end
 
   create_table "users", force: true do |t|

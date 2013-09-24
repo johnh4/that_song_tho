@@ -6,7 +6,7 @@ class ChallengeModesController < ApplicationController
 	#else
 	#end
     if current_user.favorites.empty?
-      current_user.favorites.create(title: "My Fav Song", artist: "My Fav Artist")
+      current_user.favorites.create(favoriter_id: current_user.id, title: "My Fav Song", artist: "My Fav Artist")
     end
   end
 

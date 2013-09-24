@@ -35,19 +35,30 @@ describe "Challenge Mode Pages" do
 			context "dislike forms" do
 				it { should have_button('dislike') }
 
-				it "should change user's dislike count" do
-					within('#current-challenger-forms') do
-						click_button('dislike')
+				describe "after clicking dislike" do
+
+					before do
+						within('#current-challenger-forms') do
+							click_button('dislike')
+						end
+					end
+
+					it "should change user's dislike count" do
 						user.disliked_songs.should_not be_empty
 						user.liked_songs.should be_empty
 					end
-				end
 
-				xit "should not be able to be added more than once" do
+					xit "should not be able to be added more than once" do
+						within('#current-challenger-forms') do
+							click_button('dislike')
+						end
+					end
+				end
+				it "should update the favorite's rounds_won count" do
 					within('#current-challenger-forms') do
 						click_button('dislike')
-						
-					end
+						user.favorites.last.rounds_won.should == 1
+					end					
 				end
 			end
 			context "like forms" do
@@ -60,6 +71,22 @@ describe "Challenge Mode Pages" do
 						user.disliked_songs.should be_empty
 					end
 				end
+				it "should update the favorite's rounds_won count" do
+					within('#current-challenger-forms') do
+						click_button('like')
+						user.favorites.last.rounds_won.should == 1
+					end
+				end
+				describe "a favorite's rounds won count is correct after 2 likes" do
+					before do
+						within('#current-challenger-forms') do
+							click_button 'like'
+							click_button 'like'
+						end
+					end
+
+					specify { user.favorites.last.rounds_won.should == 2 }
+				end
 			end
 			context "favorite forms" do
 				specify "challenger should have make favorite button" do
@@ -71,6 +98,11 @@ describe "Challenge Mode Pages" do
 					expect{
 						click_button('make favorite')
 					}.to change(user.favorites, :count)
+				end
+				it "should have the correct rounds won for the favorite" do
+					within('#rounds-won') do
+						should have_content(user.favorites.last.rounds_won)
+					end
 				end
 			end
 		end

@@ -65,7 +65,15 @@ describe User do
 			specify{ user_2.liked_songs.should_not be_empty }
 
 			its(:liked_songs) { should be_empty }
-
+		end
+		describe "should not affect favorites" do
+			before do
+				@liked = user.liked_songs.create(title: "not a fav", artist: "some dude")
+				@fav = user.favorites.create(favoriter_id: user.id, title: "faved it", artist: "fav gal")
+			end
+			its(:liked_songs) { should include(@liked) }
+			its(:favorites) { should include(@fav) }
+			its(:favorites) { should_not include(@liked) }
 		end
 	end
 	describe "after setting genres via association" do

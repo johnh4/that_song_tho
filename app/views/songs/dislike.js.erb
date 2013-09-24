@@ -6,6 +6,8 @@ function ready(){
 
 	$('#liked-songs-list').html("<%= escape_javascript(render partial: 'challenge_modes/liked_songs_list') %>");
 	$('#disliked-songs-list').html("<%= escape_javascript(render partial: 'challenge_modes/disliked_songs_list') %>");
+	$('#rounds-won').html("<%= current_user.favorites.last.rounds_won %>");
+	$('#favorite-area').html("<%= escape_javascript(render partial: 'challenge_modes/favorite_details') %>");
 	$('#challenger-area').fadeOut(500, replaceNames);
 	$('#challenger-area').fadeIn(500);	
 }

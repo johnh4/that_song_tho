@@ -1,0 +1,6 @@
+function ready(){
+	$('#favorite-area').html("<%= escape_javascript(render partial: 'challenge_modes/favorite_details') %>");
+}
+
+$(document).ready(ready);
+$(document).on('page:load', ready);

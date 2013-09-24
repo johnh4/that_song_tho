@@ -1,0 +1,10 @@
+<h1 class="subheader">Favorite</h1>
+<p>
+	my last favorite song's title: <%= current_user.favorites.last.title %><br>
+	my last favorite song's artist: <%= current_user.favorites.last.artist %><br>
+	rounds_won: 
+	<span id="rounds-won">
+		<%= current_user.favorites.last.rounds_won %>
+	</span><br>
+	favorites count: <%= current_user.favorites.count %>
+</p>

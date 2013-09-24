@@ -2,11 +2,7 @@
 <div class="row challege-mode">
 	<h1>Challenge Mode</h1>
 	<div class="large-6 columns" id="favorite-area">
-		<h1 class="subheader">Favorite</h1>
-		<p>
-			my last favorite song's title: <%= @favorite.title %><br>
-			my last favorite song's artist: <%= @favorite.artist %>
-		</p>
+		<%= render partial: 'challenge_modes/favorite_details' %>
 	</div>
 	<div class="large-6 columns" id="challenger-area">
 		<h1 class="subheader">Challenger</h1>
