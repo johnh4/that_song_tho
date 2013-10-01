@@ -10,7 +10,7 @@ describe User do
 	it { should respond_to(:challenge_mode_id) }
 
 	it { should be_instance_of(User) }
-	it { should validate_presence_of(:name) }
+	#it { should validate_presence_of(:name) }
 	it { should validate_presence_of(:email) }
 
 	it { should respond_to(:liked_songs) }
