@@ -10,6 +10,9 @@ ThatSongTho::Application.routes.draw do
   patch '/songs/:id/like',    to: "songs#like",    as: "like"
   patch '/challenge_modes/:id/make_favorite', to: "challenge_modes#make_favorite", as: "make_favorite"
   patch '/songs/:id/make_favorite', to: "songs#make_favorite", as: "make_favorite_song"
+  patch '/songs/:id/update_rounds', to: "songs#update_rounds", as: "update_rounds"
+
+  get '/partial', to: "challenge_modes#partial"
 
 
   get '/about', to: "static_pages#about"

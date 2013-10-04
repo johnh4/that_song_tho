@@ -1,7 +1,10 @@
 jQuery.ajaxSettings.traditional = true; 
 var apiKey = 'EUFISR9P2AYE4J2ZN';
 var curSong = null;
+var curDBsong = null;
+var curFav = null;
 var maxTimeForSkip = 3000;
+var playCount = 0;
 
 
 function info(s) {
@@ -37,6 +40,8 @@ function getRdioID(song) {
 }
 
 function playSong(song) {
+    playCount++;
+    console.log('playCount: ' + playCount);
     var rdioID = getRdioID(song);
     curSong = song;
     R.player.play({
@@ -45,9 +50,90 @@ function playSong(song) {
     $("#rp-song-title").text(song.title);
     $("#rp-artist-name").text(song.artist_name);
     document.title = song.artist_name;
+    postSong(song);
+}
+
+function postSong(foundSong) {
+    //create a song in the db
+    var song = { song: { title: foundSong.title, artist: foundSong.artist_name } }
+    console.log('song: ' + song);
+    console.log('song.song.title: ' + song.song.title);
+    console.log('song.song.artist: ' + song.song.artist);
+    $.ajax({
+        type: 'POST',
+        url: '/songs', 
+        data: JSON.stringify(song), 
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function(response){
+            console.log('postSong response: ' + response);
+            console.log('postSong response.title: ' + response.title);
+            console.log('postSong response.artist: ' + response.artist);
+            console.log('postSong response.id: ' + response.id);
+            console.log('postSong response.user_id: ' + response.user_id);
+            curDBsong = response;
+            if(playCount == 1){
+                console.log('playCount is 1, running favoriteSong()');
+                favoriteSong();
+            }
+        }
+    });
+}
+
+function favoriteSong() {
+    //use curDBsong
+    var newFavorite = { id: curDBsong.id }
+
+    $.ajax({
+        type: 'PATCH',
+        url: '/songs/' + curDBsong.id + '/make_favorite',
+        data: JSON.stringify(newFavorite),
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function(response){
+            console.log('in favoriteSong success function');
+            console.log('favoriteSong response: ' + response);
+            curFav = response;
+        }
+    });
+    updateFavHTML();
+}
+
+function updateRoundsWon(song){
+    var songID = { id: song.id }
+    var rounds = null;
+
+    $.ajax({
+        type: 'PATCH',
+        url:'/songs/' + song.id + '/update_rounds',
+        data: JSON.stringify(songID),
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function(response){
+            console.log('updateRoundsWon response: ' + response);
+            rounds = response[1];
+            console.log('rounds: ' + rounds);
+            $('#rounds-won').html(rounds);
+        }
+    });
+}
+
+function updateFavHTML() {
+    $('#fav-title').html(curDBsong.title);
+    $('#fav-artist').html(curDBsong.artist);
+    //var roundsBefore = parseInt(document.getElementById('rounds-won').textContent);
+    //var roundsAfter = roundsBefore + 1;
+    //console.log('roundsBefore: ' + roundsBefore);
+    //console.log('roundsAfter: ' + roundsAfter);
+    //$('#rounds-won').html(roundsAfter);
+    var favCountBefore = parseInt(document.getElementById('fav-count').textContent);
+    var favCountAfter = favCountBefore + 1;
 }
 
 function playNextSong() {
+    if(curFav != null) {
+        updateRoundsWon(curFav);
+    }
     fetchNextTrack();
 }
 
@@ -186,6 +272,7 @@ function skipSong() {
 }
 
 function goodSong() {
+
     var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/feedback';
 
     var args = { 
@@ -234,6 +321,7 @@ function initUI() {
 
     $("#bad-song").click(badSong);
     $("#good-song").click(goodSong);
+    $('#new-fav').click(favoriteSong);
 }
 
 $(document).ready(function() {
@@ -278,9 +366,12 @@ $(document).ready(function() {
 
             $("#rp-next").click(function() {
                 var delta = now() - trackStartTime;
-                var likeButton = $('#like');
-                console.log('likeButton: ' + likeButton);
-                $('#like').submit();
+
+                //submit like button when click next, mostly a test
+                //var likeButton = $('#like');
+                //console.log('likeButton: ' + likeButton);
+                //$('#like').submit();
+                
                 if (delta < maxTimeForSkip) {
                     skipSong();
                 } else {

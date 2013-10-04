@@ -46,6 +46,16 @@ class ChallengeModesController < ApplicationController
       #current_user.reload
       @favorite = current_user.favorites.last
   	end
+    if request.xhr?
+      render partial: 'challenge_modes/favorite_details'
+    else
+      render 'show'
+    end 
+  end
+
+
+  def partial
+    render partial: 'challenge_modes/favorite_details'
   end
 
   def make_favorite

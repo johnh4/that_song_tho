@@ -1,4 +1,18 @@
 class SongsController < ApplicationController
+
+	def create
+		@song = Song.new(song_params)
+		@song.user_id = current_user.id
+		respond_to do |format|
+			if @song.save
+				format.html { redirect_to root_path }
+				format.json { render json: @song }
+			else
+				format.html { redirect_to root_path }
+			end
+		end
+	end
+
 	def update
 		@song = Song.find(params[:id])
 		if @song.update(song_params)
@@ -96,17 +110,30 @@ class SongsController < ApplicationController
 	    					#{@new_favorite.title} by #{@new_favorite.artist}.
 	    					current_user.favorites.last.title is #{current_user.favorites.last.title}.
 	    					"
+	    @last = current_user.favorites.last
 	    respond_to do |format|
 			format.html { redirect_to @challenge_mode }
 			format.js
+			format.json { render json: [@new_favorite, @last] }
 		end
 	    #redirect_to @challenge_mode
-	  end
+	end
+
+	def update_rounds
+		rounds_won = current_user.favorites.last.rounds_won + 1
+		current_user.favorites.last.update(rounds_won: rounds_won)
+
+		respond_to do |format|
+			format.html { redirect_to @challenge_mode }
+			format.js
+			format.json { render json: [current_user.favorites.last, rounds_won] }
+		end
+	end
 
 
 	private
 
 		def song_params
-			params.require(:song).permit(:liked)
+			params.require(:song).permit(:liked, :artist, :title)
 		end
 end
