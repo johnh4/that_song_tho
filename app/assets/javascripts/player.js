@@ -5,6 +5,7 @@ var curDBsong = null;
 var curFav = null;
 var maxTimeForSkip = 3000;
 var playCount = 0;
+var challengerPlaying = null;
 
 
 function info(s) {
@@ -40,6 +41,7 @@ function getRdioID(song) {
 }
 
 function playSong(song) {
+    console.log("In player.js playSong()");
     playCount++;
     console.log('playCount: ' + playCount);
     var rdioID = getRdioID(song);
@@ -47,9 +49,13 @@ function playSong(song) {
     R.player.play({
         source: rdioID
     });
+    if(curFav != null){
+        $("#fav-rp-song-title").text(song.title);
+        $("#fav-rp-artist-name").text(song.artist_name);    
+    }
     $("#rp-song-title").text(song.title);
     $("#rp-artist-name").text(song.artist_name);
-    document.title = song.artist_name;
+    //document.title = song.artist_name;
     postSong(song);
 }
 
@@ -301,6 +307,7 @@ function now() {
 }
 
 function go() {
+    challengerPlaying = true;
     var artist = $("#artist").val();
     if (artist.length > 0) {
         createDynamicPlaylist(artist);
@@ -310,6 +317,7 @@ function go() {
 }
 
 function initUI() {
+    console.log('In player.js initUI().');
     $("#the-player").hide();
     $("#artist").keydown(
         function(){
@@ -338,12 +346,14 @@ $(document).ready(function() {
         initUI();
         R.ready(function() {
             R.player.on("change:playingTrack", function(track) {
-                if (track) {
-                    var image = track.attributes.icon;
-                    $("#rp-album-art").attr('src', image);
-                    trackStartTime = now();
-                } else {
-                    playNextSong();
+                if(useFavPlayer == false){
+                    if (track) {
+                        var image = track.attributes.icon;
+                        $("#rp-album-art").attr('src', image);
+                        trackStartTime = now();
+                    } else {
+                        playNextSong();
+                    }
                 }
             });
 
@@ -362,6 +372,10 @@ $(document).ready(function() {
 
             $("#rp-pause-play").click(function() {
                 R.player.togglePause();
+                if(challengerPlaying == false){
+                    challengerPlaying = true;
+                    playSong(curSong);
+                }
             });
 
             $("#rp-next").click(function() {
