@@ -7,6 +7,8 @@ var curFav = null;
 var maxTimeForSkip = 3000;
 var fav_playCount = 0;
 var useFavPlayer = true;
+var fav_songIndex = 0;
+var fav_played = false;
 
 
 function fav_info(s) {
@@ -256,6 +258,39 @@ function fav_createDynamicPlaylist(artist) {
     );
 }
 
+function fav_findSong(artist, title, index) {
+    var url = 'http://developer.echonest.com/api/v4/song/search?api_key=' + apiKey;
+    fav_tinfo("Finding a song ...");
+
+    var args = {
+        'artist': artist,
+        'title': title,
+        //'api_key' : apiKey,
+        'bucket': [ 'id:rdio-US', 'tracks'], 'limit' : true,
+        //'type':'artist-radio'
+        //'dmca': false
+    };
+
+    $.getJSON(url, args,
+        function(data) {
+            console.log(data);
+            if (data.response.status.code == 0) {
+                session_id = data.response.session_id;
+                $("#fav-pl-the-player").show();
+                //fav_fetchNextTrack();
+                console.log('data.response.songs[' + index +'].title: ' + data.response.songs[index].title);
+                fav_playSong(data.response.songs[index]);
+            } else {
+                fav_error("Trouble getting a song of title " + title);
+            }
+        },
+        function() {
+            console.log('error');
+            fav_error("Trouble getting a song for " + artist);
+        }
+    );
+}
+
 function fav_badSong() {
     var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/feedback';
 
@@ -278,6 +313,7 @@ function fav_badSong() {
 }
 
 function fav_skipSong() {
+    console.log('in fav_skipSong');
     var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/feedback';
 
     var args = { 
@@ -329,10 +365,13 @@ function fav_now() {
 
 function fav_go() {
     //useFavPlayer = true;
+    fav_songIndex = 0;
     console.log("In fav-player.js' fav_go().");
     var artist = $("#fav-pl-artist").val();
-    if (artist.length > 0) {
-        fav_createDynamicPlaylist(artist);
+    var title = $("#fav-pl-title").val();
+    if (title.length > 0) {
+        //fav_createDynamicPlaylist(artist);
+        fav_findSong(artist, title, fav_songIndex);
     } else {
         fav_error("Type an artist first");
     }
@@ -343,6 +382,12 @@ function fav_initUI() {
     console.log('In fav-player.js fav_initUI().');
     $("#fav-pl-the-player").hide();
     $("#fav-pl-artist").keydown(
+        function(){
+            if (event.keyCode == 13) {
+                fav_go();
+            }
+        });
+    $("#fav-pl-title").keydown(
         function(){
             if (event.keyCode == 13) {
                 fav_go();
@@ -369,11 +414,23 @@ $(document).ready(function() {
         fav_initUI();
         R.ready(function() {
             R.player.on("change:playingTrack", function(track) {
+                console.log('change:playingTrack triggered.');
                 if (useFavPlayer){
                     if (track) {
-                        console.log('track.name in change:playingTrack event: '+track.attributes.name);
+                        console.log('track.attributes.name in change:playingTrack event: '+track.attributes.name);
                         console.log('fav_favEcho.title in change:playingTrack event: '+fav_favEcho.title);
                         console.log('fav_curSong.title in change:playingTrack event: '+fav_curSong.title);
+                        console.log('track.attributes.canStream: ' + track.attributes.canStream);
+                        if(track.attributes.canStream == false){
+                            fav_songIndex++;
+                            console.log('track.attributes.album.canStream false, running fav_findSong with fav_songIndex of' + fav_songIndex + ', name of ' + track.attributes.name + 'and artist of ' + track.attributes.artist);
+                            fav_findSong(track.attributes.artist, track.attributes.name, fav_songIndex);
+                        }
+                        if(track.attributes.canStream == true){
+                            console.log('track.attributes.canStream is true, setting fav_songIndex back to 0');
+                            fav_songIndex = 0;
+                            console.log('fav_songIndex', fav_songIndex);
+                        }
                         if(fav_favEcho && fav_favEcho.title == track.attributes.name){
                             console.log('fav_favEcho in change:playingTrack event: '+fav_favEcho);
                             var fav_image = track.attributes.icon;
@@ -381,12 +438,19 @@ $(document).ready(function() {
                             console.log('change:playingTrack callback changed image');
                             fav_trackStartTime = fav_now();
                         }
+                        //fav_playSong(fav_favEcho);
+                        //R.player.setCurrentPosition(0);
                     } else {
                         console.log('else statement in change:playingTrack, track not found?');
                         //fav_playNextSong();
+                        //fav_playSong(fav_favEcho);
+                        fav_played = true;
+                        fav_findSong(track.attributes.artist, track.attributes.name, fav_songIndex);
                     }
                 }
-                useFavPlayer = false;
+                if(track.attributes.canStream == true){
+                    //useFavPlayer = false;
+                }
             });
 
             R.player.on("change:playState", function(state) {
@@ -411,7 +475,11 @@ $(document).ready(function() {
                 if(challengerPlaying == true){
                     challengerPlaying = false;
                     fav_playSong(fav_favEcho);
-                } else {
+                } else if(fav_played == true){
+                    fav_played = false;
+                    //fav_findSong(track.attributes.artist, track.attributes.name, fav_songIndex);
+                    fav_playSong(fav_curSong);
+                }else {
                     R.player.togglePause();                    
                 }
             });

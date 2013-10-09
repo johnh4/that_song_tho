@@ -308,6 +308,7 @@ function now() {
 
 function go() {
     challengerPlaying = true;
+    useFavPlayer = false;
     var artist = $("#artist").val();
     if (artist.length > 0) {
         createDynamicPlaylist(artist);
@@ -347,11 +348,13 @@ $(document).ready(function() {
         R.ready(function() {
             R.player.on("change:playingTrack", function(track) {
                 if(useFavPlayer == false){
+                    console.log('in player.js change:playingTrack');
                     if (track) {
                         var image = track.attributes.icon;
                         $("#rp-album-art").attr('src', image);
                         trackStartTime = now();
                     } else {
+                        console.log('in player.js change:playingTrack else');
                         playNextSong();
                     }
                 }
@@ -371,6 +374,7 @@ $(document).ready(function() {
             R.player.on("change:playingSource", function(track) {});
 
             $("#rp-pause-play").click(function() {
+                useFavPlayer = false;
                 R.player.togglePause();
                 if(challengerPlaying == false){
                     challengerPlaying = true;
