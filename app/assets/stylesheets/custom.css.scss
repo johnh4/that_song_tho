@@ -147,7 +147,30 @@ p{
 	//color: green;
 	//$paragraph-font-family: arial;
 }
+.center{
+	text-align: center;
+}
+#fav-pl-the-player h1, #fav-pl-the-player h3, #fav-pl-the-player h2, #the-player h1, #the-player h3 {
+	display: inline;
+}
+#fav-pl-rp-song-title, #rp-song-title {
+	font-weight: 100;
+	font-family: 'Josefin sans', 'Times New Roman';
+}
+#fav-pl-rp-artist-name, #rp-artist-name {
+	color: red;
+	//float: right;
+}
 //********** CHALLENGE MODE *******
 .all-challengers-forms form, #current-challenger-forms form {
 	display: inline;
+}
+#fav-pl-rp-next {
+	display:none;
+}
+#fav-pl-more-info, #fav-pl-good-song, #fav-pl-bad-song, #lead-in, #pick-artist-div, #reload-div {
+	display: none;
+}
+#reload-div {
+	margin-top: 100px;
 }

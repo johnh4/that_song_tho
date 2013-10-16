@@ -1,6 +1,6 @@
-<div class="container row">
+<div class="container">
         <div id="the-form" class="large-10 columns">
-            <h1> Dynamic Playlist Demo</h1>
+            <h1>Challenger</h1>
             <p class="lead"> Listen to a radio station that responds to your feedback </p>
             <div>
                 <input id="artist" type="text" placeholder="Enter artist name ..." </input>
@@ -8,38 +8,43 @@
                 <span id="info" class=""> </span>
             </div>
         </div>
-    <div id="the-player" class="row large-10 columns">
-      <div id="titles">
-        <h4 id='rp-song-title'></h4> 
-        <div  id='rp-artist-name'></div> 
-      </div>
-      <div id="rp-now-playing" class="large-5 columns">
-        <img id="rp-album-art">
-          <div id='bottom-buttons'>
-              <div id='button-panel' class='btn-group'>
-                  <button id='rp-pause-play' rel='tooltip' title='play/pause the song'
-                    class="btn btn-primary btn-small"><i class="icon-white icon-play"></i></button>
-                  <button id='rp-next' rel='tooltip' title='go to the next song', 
-                    class="btn btn-primary btn-small"><i class="icon-white icon-forward"></i></button>
-              </div>
-              <div id="">
-                <%= button_tag('new favorite', id: "new-fav") %>
-              </div>
+    <div class="row">
+      <div id="the-player" class="large-12 columns">
+        <div id="titles">
+          <h1 id='rp-song-title'></h1> 
+          <h3  id='rp-artist-name'></h3> 
+        </div>
+        <div id="rp-now-playing" class="large-10 columns">
+          <img id="rp-album-art">
+            <div id='bottom-buttons'>
+                <div id='button-panel' class='btn-group'>
+                    <button id='rp-pause-play' rel='tooltip' title='play/pause the song'
+                      class="btn btn-primary btn-small"><i class="icon-white icon-play"></i>Play</button>
+                    <button id='rp-next' rel='tooltip' title='go to the next song', 
+                      class="btn btn-primary btn-small"><i class="icon-white icon-forward"></i>></button>
+                </div>
+                <div id="">
+                  <%= button_tag('new favorite', id: "new-fav") %>
+                </div>
 
-            <div class='btn-group pull-right'>
-                <button  id="bad-song" rel="tooltip"  title="I don't like this song"
-                    class="btn btn-danger btn-small"><i class="icon-white icon-thumbs-down"></i></button>
-                </button>
-                <button  id="good-song" rel="tooltip"  title="I like this song"
-                    class="btn btn-success btn-small"><i class="icon-white icon-thumbs-up"></i></button>
-                </button>
+              <div class='btn-group pull-right'>
+                  <button  id="bad-song" rel="tooltip"  title="I don't like this song"
+                      class="btn btn-danger btn-small"><i class="icon-white icon-thumbs-down"></i></button>
+                  </button>
+                  <button  id="good-song" rel="tooltip"  title="I like this song"
+                      class="btn btn-success btn-small"><i class="icon-white icon-thumbs-up"></i></button>
+                  </button>
+              </div>
             </div>
-          </div>
-        <div id="info-extra"> </div>
+          <div id="info-extra"> </div>
+        </div>
+      <div id="more-info" class="large-4 columns">
+          <h4> Up Next </h4>
+          <div id="up-next" class=""> </div>
       </div>
-    <div id="more-info" class="large-4 columns">
-        <h4> Up Next </h4>
-        <div id="up-next" class=""> </div>
+    </div>
+    <div id="game-over" class="large-10 columns">
+      <h1>Game Over</h1>
     </div>
   </div>
   <div class="container large-8 columns">
@@ -47,3 +52,4 @@
     Powered by <a href="http://echonest.com">The Echo Nest</a> and <a href="http://rdio.com">Rdio</a>. 
     </small>
   </div>
+</div>

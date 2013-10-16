@@ -106,10 +106,10 @@ class SongsController < ApplicationController
 	    @challenge_mode = @new_favorite.challenge_mode
 
 	    current_user.favorites.create(title: @new_favorite.title, artist: @new_favorite.artist)
-	    flash[:notice] = "From songs controller. Your last new favorites song is 
-	    					#{@new_favorite.title} by #{@new_favorite.artist}.
-	    					current_user.favorites.last.title is #{current_user.favorites.last.title}.
-	    					"
+	    #flash[:notice] = "From songs controller. Your last new favorites song is 
+	    #					#{@new_favorite.title} by #{@new_favorite.artist}.
+	    #					current_user.favorites.last.title is #{current_user.favorites.last.title}.
+	    #					"
 	    @last = current_user.favorites.last
 	    respond_to do |format|
 			format.html { redirect_to @challenge_mode }

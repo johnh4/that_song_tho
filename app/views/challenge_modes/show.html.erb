@@ -1,7 +1,14 @@
 
 <div id="test"></div>
-<div class="row"><%= render 'shared/fav_player' %></div>
-<div class="row"><%= render 'shared/player' %></div>
+<%= render 'challenge_modes/lead_in' %>
+<div class="row center" id="reload-div">
+	<button id="reload-btn" class="center">Retry</button>
+	<p>Song not found, please try again.</p>
+</div>
+<div class="row">
+	<div class="large-6 columns"><%= render 'shared/fav_player' %></div>
+	<div class="large-6 columns"><%= render 'shared/player' %></div>
+</div>
 
 <div class="row challege-mode">
 	<h1>Challenge Mode</h1>

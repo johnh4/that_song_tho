@@ -6,7 +6,8 @@ var curFav = null;
 var maxTimeForSkip = 3000;
 var playCount = 0;
 var challengerPlaying = null;
-
+var reloaded = false;
+var favGoTimeout;
 
 function info(s) {
     $("#info").removeClass();
@@ -56,6 +57,7 @@ function playSong(song) {
     $("#rp-song-title").text(song.title);
     $("#rp-artist-name").text(song.artist_name);
     //document.title = song.artist_name;
+
     postSong(song);
 }
 
@@ -145,6 +147,7 @@ function playNextSong() {
 
 
 function fetchNextTrack() {
+    console.log('in fetchNextTrack()');
     var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/next';
 
     var args = { 
@@ -171,6 +174,7 @@ function fetchNextTrack() {
             $("#up-next").append(all);
         },
         function() {
+            console.log('Trouble creating playlist session');
             error("Trouble creating playlist session for " + artist);
         }
     );
@@ -224,6 +228,7 @@ function createDynamicPlaylist(artist) {
                 session_id = data.response.session_id;
                 $("#the-player").show();
                 fetchNextTrack();
+                $('#the-form').fadeOut(500);
             } else {
                 error("Trouble creating playlist for artist " + artist);
             }
@@ -307,6 +312,7 @@ function now() {
 }
 
 function go() {
+    console.log('in go()');
     challengerPlaying = true;
     useFavPlayer = false;
     var artist = $("#artist").val();
@@ -315,11 +321,65 @@ function go() {
     } else {
         error("Type an artist first");
     }
+    if(reloaded == true){
+        //$('#fav-pl-rp-pause-play').delay(4000).trigger('click');
+    }
+    //$('#fav-pl-rp-pause-play').delay(1500).trigger('click');
 }
 
 function initUI() {
     console.log('In player.js initUI().');
     $("#the-player").hide();
+    $('#game-over').hide();
+    //$('#lead-in').hide();
+    $('#lead-in').delay(500).fadeIn(1000);
+
+    $('#the-form').hide();
+    $('#fav-pl-the-form').hide();
+    var title;
+    $('#pick-title-div').keydown(
+        function(){
+            if (event.keyCode == 13) {
+                title = $('#pick-title-input').val();
+                $('#pick-title-div').fadeOut(500, function(){
+                    console.log('lead-in title: ' + title);
+                    $('#pick-artist-div p').prepend(title);
+                    $('#pick-artist-div').fadeIn(500);
+                });
+            }
+        });
+    $('#pick-artist-div').keydown(
+        function(){
+            if (event.keyCode == 13) {
+                var artist = $('#pick-artist-input').val();
+                $('#lead-in').fadeOut(500, function(){
+                    console.log('lead-in artist: ' + artist);
+                    $('#artist').val(artist);
+                    $('#fav-pl-artist').val(artist);
+                    $('#fav-pl-title').val(title);
+                    $('#the-form').fadeIn(500);
+                    $('#fav-pl-the-form').fadeIn(500);
+                    //go();
+                    fav_go();
+                    
+                    //useFavPlayer = true;
+                    //fav_go();
+                    favGoTimeout = window.setTimeout(function(){
+                        //useFavPlayer = true;
+                        //fav_go();
+                        go();
+                    }, 1500);
+
+                    //useFavPlayer = true;
+                    //fav_playSong(fav_favEcho);
+
+                    //$('#fav-pl-rp-pause-play').delay(1500).trigger('click');
+                    //challengerPlaying = false;
+                    //useFavPlayer = true;
+                    //$('#fav-pl-rp-pause-play').trigger('click');
+                });
+            }
+        });
     $("#artist").keydown(
         function(){
             if (event.keyCode == 13) {
@@ -330,7 +390,24 @@ function initUI() {
 
     $("#bad-song").click(badSong);
     $("#good-song").click(goodSong);
-    $('#new-fav').click(favoriteSong);
+    $('#new-fav').click(function(){
+        useFavPlayer = true;
+        var artist = curSong.artist_name;
+        var title = curSong.title;
+        fav_favEcho = curSong;
+        console.log('in #new-fav.click, cursong.title: ' + curSong.title);
+        console.log('in #new-fav.click, fav_favEcho.title: ' + fav_favEcho.title);
+        fav_findSong(artist, title, 0);
+        fav_favoriteSong();
+        var newImage = $("#fav-pl-rp-album-art").attr('src');
+        $("#rp-album-art").attr('src', newImage);
+        endGame();
+    });
+}
+
+function endGame(){
+    $('#the-player').fadeOut(500);
+    $('#game-over').fadeIn(500);
 }
 
 $(document).ready(function() {
@@ -348,26 +425,33 @@ $(document).ready(function() {
         R.ready(function() {
             R.player.on("change:playingTrack", function(track) {
                 if(useFavPlayer == false){
+                    $("#the-player").fadeOut(500);
                     console.log('in player.js change:playingTrack');
                     if (track) {
                         var image = track.attributes.icon;
                         $("#rp-album-art").attr('src', image);
                         trackStartTime = now();
+                        if(playCount == 1 && reloaded == false || playCount == 3 && reloaded == true){
+                            $('#fav-pl-rp-pause-play').trigger('click');
+                        }
                     } else {
                         console.log('in player.js change:playingTrack else');
                         playNextSong();
                     }
+                    $("#the-player").fadeIn(500);
                 }
             });
 
             R.player.on("change:playState", function(state) {
-                if (state == R.player.PLAYSTATE_PAUSED) {
+                if (state == R.player.PLAYSTATE_PAUSED && useFavPlayer == false) {
                     $("#rp-pause-play i").removeClass("icon-pause");
                     $("#rp-pause-play i").addClass("icon-play");
+                    $("#rp-pause-play").html('Play');
                 }
-                if (state == R.player.PLAYSTATE_PLAYING) {
+                if (state == R.player.PLAYSTATE_PLAYING && useFavPlayer == false) {
                     $("#rp-pause-play i").removeClass("icon-play");
                     $("#rp-pause-play i").addClass("icon-pause");
+                    $("#rp-pause-play").html('Playing');
                 }
             });
 
@@ -377,6 +461,8 @@ $(document).ready(function() {
                 useFavPlayer = false;
                 R.player.togglePause();
                 if(challengerPlaying == false){
+                    $("#fav-pl-rp-pause-play").html('Play');
+                    $("#rp-pause-play").html('Playing');
                     challengerPlaying = true;
                     playSong(curSong);
                 }
