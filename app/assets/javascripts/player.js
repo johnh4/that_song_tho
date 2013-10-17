@@ -398,9 +398,9 @@ function initUI() {
         console.log('in #new-fav.click, cursong.title: ' + curSong.title);
         console.log('in #new-fav.click, fav_favEcho.title: ' + fav_favEcho.title);
         fav_findSong(artist, title, 0);
-        fav_favoriteSong();
-        var newImage = $("#fav-pl-rp-album-art").attr('src');
-        $("#rp-album-art").attr('src', newImage);
+        favoriteSong();
+        var newImage = $("#rp-album-art").attr('src');
+        $("#fav-pl-rp-album-art").attr('src', newImage);
         endGame();
     });
 }

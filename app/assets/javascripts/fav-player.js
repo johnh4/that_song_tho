@@ -112,6 +112,7 @@ function fav_postSong(foundSong) {
 function fav_favoriteSong() {
     //use fav_curDBsong
     var newFavorite = { id: fav_curDBsong.id }
+    console.log('in fav_favoriteSong, fav_curDBsong: ' + fav_curDBsong.title);
     //fav_favEcho = fav_curSong;
     $.ajax({
         type: 'PATCH',

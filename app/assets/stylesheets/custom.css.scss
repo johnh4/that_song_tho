@@ -162,13 +162,24 @@ p{
 	//float: right;
 }
 //********** CHALLENGE MODE *******
+body, html {
+	height: 100%;
+}
+#lead-in {
+	height: calc(100% - 45px - 278px);
+	height: -webkit-calc(100% - 45px - 278px);
+}
+.challenge-mode {
+	display: none;
+}
 .all-challengers-forms form, #current-challenger-forms form {
 	display: inline;
 }
 #fav-pl-rp-next {
 	display:none;
 }
-#fav-pl-more-info, #fav-pl-good-song, #fav-pl-bad-song, #lead-in, #pick-artist-div, #reload-div {
+#fav-pl-more-info, #fav-pl-good-song, #fav-pl-bad-song, #lead-in, #pick-artist-div, #reload-div,
+#fav-pl-the-form, #the-form, #fav-pl-the-player, #the-player, #game-over {
 	display: none;
 }
 #reload-div {
