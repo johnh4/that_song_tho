@@ -10,6 +10,8 @@ gem 'will_paginate', '3.0.4'
 gem 'compass-rails'
 gem 'zurb-foundation', '~>4.0.0'
 gem 'devise'
+#gem 'twitter', '~>4.8.1'
+gem 'twitter', '~>5.0.0.rc.1'
 
 group :development, :test do
   gem 'sqlite3', '1.3.7'
