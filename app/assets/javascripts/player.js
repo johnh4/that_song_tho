@@ -82,7 +82,7 @@ function postSong(foundSong) {
             curDBsong = response;
             if(playCount == 1){
                 console.log('playCount is 1, running favoriteSong()');
-                favoriteSong();
+                //favoriteSong();
             }
         }
     });
