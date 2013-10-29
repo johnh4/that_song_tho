@@ -23,7 +23,6 @@ class ChallengeModesController < ApplicationController
 	  	songs_to_suggest.each do |song|
 	  		@challenge_mode.suggestions.create!(title: song.title, artist: song.artist)
 	  	end
-  		flash[:success] = "Challenge Mode has started!"
   		redirect_to @challenge_mode
   	else
   		flash.now[:error] = "Error starting challenge mode."

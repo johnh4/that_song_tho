@@ -5,13 +5,10 @@
 	</ul>
 	<section class="top-bar-section">
 		<ul class="left">
-			<li class="divider"></li>
-			<li><%= link_to "about", about_path %></li>
-			<li class="divider"></li>
 		</ul>
 		<ul class="right">
-			<li><%= link_to "home", root_path %></li>
-			<li><%= link_to "help", help_path %></li>
+			<li><%= link_to "Home", root_path %></li>
+			<li><%= link_to "Help", help_path %></li>
 			<% if user_signed_in? %>
 				<li class="has-dropdown"><%= link_to "Account", "#" %>
 					<ul class="dropdown">

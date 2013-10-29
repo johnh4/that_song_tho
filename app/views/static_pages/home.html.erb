@@ -17,17 +17,17 @@
 	<div class="large-4 columns">
 		<%= image_tag('trophy.svg', class: "iconize", alt: "Tropy") %>
 		<h3>Challenge Mode</h3>
-		<p>Ut sollicitudin sapien a dapibus mollis. Sed risus urna, porta sed dapibus tempus, vehicula in erat. Maecenas sit amet adipiscing sem.</p>
+		<p>Pick a song, and we'll try to play you one that you like more.</p>
 	</div>
 	<div class="large-4 columns">
 		<%= image_tag('boxing-glove-hi.png', class: "iconize", alt: "Glove") %>
-		<h3>Battle Mode</h3>
-		<p>Nulla facilisi. Suspendisse non massa viverra lectus facilisis tempus. Vivamus dui risus, tempor in feugiat at, convallis vel ligula.</p>
+		<h3>Battle Mode <p class="coming-soon">coming soon</p></h3>
+		<p>We'll use your recent favorites to construct a tournament. May the best song win.</p>
 	</div>
 	<div class="large-4 columns">
 		<%= image_tag('check-list2.svg', class: "iconize", alt: "List") %>
-		<h3>List Mode</h3>
-		<p>Pellentesque gravida aliquam consectetur. Vestibulum congue, metus nec vulputate ornare, odio arcu tempor enim.</p>
+		<h3>List Mode <p class="coming-soon">coming soon</p></h3>
+		<p>Listen to your recent favorites from the Challenge and Battle modes.</p>
 	</div>
 </div>
 <!--
@@ -52,7 +52,10 @@
 		<div class="call-box">
 		Choose your favorite song. See how it holds up.
 			<div class="pull-right">
-				<%= link_to "Try it Out", new_challenge_mode_path, class: "link-box" %>
+				<!--<%= link_to "Try it Out", "#", class: "link-box", onclick: "$('#new_challenge_mode').submit();" %>-->
+				<%= form_for(ChallengeMode.new) do |f| %>
+					<%= f.submit "Try it Out", class: "link-box link", id: "" %>
+				<% end %>
 			</div>
 		</div>
 	</div>
@@ -62,14 +65,13 @@
 	<div class="large-3 columns">
 		<h3>New is Now</h3>
 		<p>
-		Music has changed. Let's try something new.
-		Mauris rutrum ipsum a quam tincidunt, nec faucibus enim hendrerit. Nulla non convallis diam.
+		As it's moved from vinyl to CD to flash and to the cloud, music has changed. Let's try something new. Get started with one 
+		<%= link_to "click", "#", id: "cm-link", onclick: "$('#new_challenge_mode').submit();" %>.
 		</p>
-		<p><%= @tweet %></p>
 	</div>
 	<div class="highlighted-images">
 		<div class="large-3 columns">
-			<%= image_tag('Vinyl-LP-1024x819.jpg', alt: "record", class: "featured-image") %>
+			<%= image_tag('Vinyl-LP-1024x819web.jpg', alt: "record", class: "featured-image") %>
 		</div>
 		<div class="large-3 columns">
 			<%= image_tag('12065564351141855711Chrisdesign_CD_DVD.svg.hi.png', alt: "record") %>

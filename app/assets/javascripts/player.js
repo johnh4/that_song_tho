@@ -343,7 +343,7 @@ function initUI() {
                 title = $('#pick-title-input').val();
                 $('#pick-title-div').fadeOut(500, function(){
                     console.log('lead-in title: ' + title);
-                    $('#pick-artist-div p').prepend(title);
+                    //$('#pick-artist-div p').prepend(title);
                     $('#pick-artist-div').fadeIn(500);
                 });
             }
