@@ -30,29 +30,11 @@
 		<p>Listen to your recent favorites from the Challenge and Battle modes.</p>
 	</div>
 </div>
-<!--
-<div class="row">
-	<div class="large-12 columns">
-		<div class="panel">
-			<div class="row">
-				<div class="large-9 columns">
-					<h3>Yours</h3>
-					<p>Choose your favorite song. See how it holds up.</p>
-				</div>
-				<div class="large-3 columns">
-					<%= link_to "Try it Out", "#", class: "button right" %>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
--->
 <div class="row">
 	<div class="large-12 columns">
 		<div class="call-box">
 		Choose your favorite song. See how it holds up.
 			<div class="pull-right">
-				<!--<%= link_to "Try it Out", "#", class: "link-box", onclick: "$('#new_challenge_mode').submit();" %>-->
 				<%= form_for(ChallengeMode.new) do |f| %>
 					<%= f.submit "Try it Out", class: "link-box link", id: "" %>
 				<% end %>

@@ -160,9 +160,6 @@ footer{
 //********** TYPE *****************
 p{
 	font-family: 'Josefin sans','Times New Roman',  'Helvetica Nue';
-	//font-weight: bold;
-	//color: green;
-	//$paragraph-font-family: arial;
 }
 .center{
 	text-align: center;
@@ -182,9 +179,9 @@ p{
 body, html {
 	height: 100%;
 }
-#lead-in {
-	height: calc(100% - 45px - 278px);
-	height: -webkit-calc(100% - 45px - 278px);
+#lead-in, #new-challenge-mode {
+	height: calc(100% - 45px - 295px);
+	height: -webkit-calc(100% - 45px - 295px);
 }
 .challenge-mode {
 	display: none;

@@ -1,4 +1,6 @@
 class ChallengeModesController < ApplicationController
+  before_action :signed_in, only: [:create, :show, :new]
+
   def new
   	@challenge_mode = ChallengeMode.new
   	#unless current_user.favorite.nil?
@@ -78,4 +80,13 @@ class ChallengeModesController < ApplicationController
   		def challenge_mode_params
   			params.require(:challenge_mode)
   		end
+
+      #before actions
+      def signed_in
+        unless user_signed_in?
+          #store_location
+          flash[:notice] = "Please sign in first."
+          redirect_to new_user_session_path
+        end
+      end
 end

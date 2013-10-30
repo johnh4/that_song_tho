@@ -1,7 +1,10 @@
-<div class="row">
-	<h1>New Challenge</h1>
-
-	<%= form_for(@challenge_mode) do |f| %>
-		<%= f.submit "Start" %>
-	<% end %>
+<div id="new-challenge-mode">
+	<div class="row">
+		<h1 class="center subheader">Welcome to Challenge Mode</h1>
+		<div class="center">
+			<%= form_for(@challenge_mode) do |f| %>
+				<%= f.submit "Begin", class: "button" %>
+			<% end %>
+		</div>
+	</div>
 </div>
