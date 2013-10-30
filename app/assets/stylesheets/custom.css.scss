@@ -14,15 +14,6 @@ img{
 	width: 100%;
 }
 //********** PAGE *****************
-.call-box @media(max-width: 768px) {
-	height: 150px;
-	float: none;
-	.pull-right {
-		text-align: center;
-		float: none;
-		padding-top: 20px;
-	}
-}
 .call-box{
 	margin-top: 40px;
 	margin-bottom: 45px;
@@ -36,6 +27,7 @@ img{
 	display: inline-block;
 	width: 100%;
 	height: 75px;
+
 	input {
 			font-family: 'Open Sans';
 			font-weight: 300;
@@ -85,6 +77,17 @@ img{
 		font-style: italic;
 		display: inline;
 		opacity: .2;
+	}
+}
+@media (max-width: 768px) {
+	.call-box {
+		height: 150px;
+		float: none;
+		.pull-right {
+			text-align: center;
+			float: none;
+			padding-top: 20px;
+		}
 	}
 }
 //********** HOME *****************
