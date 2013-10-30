@@ -79,7 +79,7 @@ img{
 		opacity: .2;
 	}
 }
-@media (max-width: 768px) {
+@media only screen and (max-width: 768px) {
 	.call-box {
 		height: 150px;
 		float: none;
